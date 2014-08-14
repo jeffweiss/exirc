@@ -642,11 +642,11 @@ defmodule ExIrc.Client do
   end
 
   defp do_add_handler(pid, handlers) do
-    case Process.alive?(pid) and not Enum.member?(handlers, pid) do
-      true ->
+    case Enum.member?(handlers, pid) do
+      false ->
         ref = Process.monitor(pid)
         [{pid, ref} | handlers]
-      false ->
+      true ->
         handlers
     end
   end
