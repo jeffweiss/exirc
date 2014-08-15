@@ -579,7 +579,7 @@ defmodule ExIrc.Client do
         if state.debug?, do: debug("SENT PONG2")
         send!(state.socket, pong2!(state.nick, from))
       _ ->
-        if state.debug?, do: debug("SENT PONG1") 
+        if state.debug?, do: debug("SENT PONG1")
         send!(state.socket, pong1!(state.nick))
     end
     {:noreply, state};
@@ -638,6 +638,7 @@ defmodule ExIrc.Client do
   # Internal API
   ###############
   defp send_event(msg, %ClientState{:event_handlers => handlers}) when is_list(handlers) do
+    flush
     Enum.each(handlers, fn({pid, _}) -> Kernel.send(pid, msg) end)
   end
 
